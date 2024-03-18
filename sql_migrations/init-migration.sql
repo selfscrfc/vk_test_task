@@ -1,6 +1,3 @@
--- we don't know how to generate root <with-no-name> (class Root) :(
-
-comment on database postgres is 'default administrative connection database';
 
 create table actor
 (
@@ -54,4 +51,3 @@ create table film_actor
 
 alter table film_actor
     owner to postgres;
-

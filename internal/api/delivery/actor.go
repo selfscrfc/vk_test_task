@@ -7,6 +7,12 @@ import (
 	"vk_test_task/internal/api/models"
 )
 
+// CreateActor godoc
+// @Description creates actor instance and returns its uuid
+// @Accept json
+// @Produce json
+// @Success 200 {object} api_models.CreateActorParams
+// @Router /actor/create [post]
 func (h Handler) CreateActor() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var params api_models.CreateActorParams

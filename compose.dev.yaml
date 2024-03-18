@@ -17,11 +17,11 @@ services:
       - .env
 
   cinema_db:
-    image: postgres:13.14-alpine3.19
+    image: postgres:alpine3.19
     container_name: cinema_db
     volumes:
+      - ./sql_migrations/init-migration.sql:/docker-entrypoint-initdb.d/init.sql
       - ./data/postgres:/var/lib/postgresql/data
-      - ./migrations/init.sql:/docker-entrypoint-initdb.d
     env_file:
       - .env
     ports:

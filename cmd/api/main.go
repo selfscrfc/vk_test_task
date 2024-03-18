@@ -4,6 +4,8 @@ import (
 	"vk_test_task/config"
 	"vk_test_task/internal/server"
 	tint "vk_test_task/pkg/logger"
+
+	_ "vk_test_task/docs"
 )
 
 func main() {
