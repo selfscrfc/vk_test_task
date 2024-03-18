@@ -33,3 +33,5 @@ services:
     volumes:
       - ./data/redis:/var/lib/redis
       - ./data/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"

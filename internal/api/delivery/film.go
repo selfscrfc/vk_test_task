@@ -10,6 +10,16 @@ import (
 	"vk_test_task/internal/common"
 )
 
+// CreateFilm godoc
+// @Summary CreateFilm
+// @Description creates film instance and returns its uuid. Release date in ISO format (2009-05-27T00:00:00.000Z)
+// @Tags Film
+// @Param input body api_models.CreateFilmParams true "film info"
+// @Accept json
+// @Produce json
+// @Success 200 {object} api_models.CreateFilmParams
+// @Router /film/create [post]
+// @Security AccessTokenAuth
 func (h Handler) CreateFilm() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var params api_models.CreateFilmParams
@@ -36,6 +46,17 @@ func (h Handler) CreateFilm() http.HandlerFunc {
 	}
 }
 
+// GetFilms godoc
+// @Summary GetFilms
+// @Description return all films with their actors
+// @Tags Film
+// @Param sort_by path string false "sort column [В сваггере не настроены квери параметры, не нашел документации. Сортировка идеально работает через постман или инсомнию. Спасибо за понимание]"
+// @Param asc path string false "sort asc"
+// @Accept json
+// @Produce json
+// @Success 200
+// @Router /film/get{sort_by}{asc} [get]
+// @Security AccessTokenAuth
 func (h Handler) GetFilms() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
@@ -77,6 +98,15 @@ func (h Handler) GetFilms() http.HandlerFunc {
 	}
 }
 
+// UpdateFilm godoc
+// @Summary UpdateFilm
+// @Description updates film info. Release date in ISO format (2009-05-27T00:00:00.000Z)
+// @Tags Film
+// @Param input body api_models.UpdateFilmParams true "film info"
+// @Accept json
+// @Success 200
+// @Router /film/update [post]
+// @Security AccessTokenAuth
 func (h Handler) UpdateFilm() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var params api_models.UpdateFilmParams
@@ -103,6 +133,15 @@ func (h Handler) UpdateFilm() http.HandlerFunc {
 	}
 }
 
+// DeleteFilm godoc
+// @Summary DeleteFilm
+// @Description deletes film by its filmId
+// @Tags Film
+// @Param input body api_models.DeleteFilmParams true "filmId"
+// @Accept json
+// @Success 200
+// @Router /film/delete [post]
+// @Security AccessTokenAuth
 func (h Handler) DeleteFilm() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var params api_models.DeleteFilmParams
@@ -129,6 +168,16 @@ func (h Handler) DeleteFilm() http.HandlerFunc {
 	}
 }
 
+// SearchFilm godoc
+// @Summary SearchFilm
+// @Description accepts path parameters, name prioritized. Defaults: rate, desc
+// @Tags Film
+// @Param name path string false "film name fragment [опять же, тут не настроены квери параметры, через апишницы все работает как миленькое (ну вот даже скрины могу скинуть)]"
+// @Param actor_name path string false "actor name fragment"
+// @Produce json
+// @Success 200
+// @Router /film/search{name}{actor_name} [get]
+// @Security AccessTokenAuth
 func (h Handler) SearchFilm() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var params api_models.SearchFilmParams

@@ -14,16 +14,522 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/actor/create": {
+            "post": {
+                "security": [
+                    {
+                        "AccessTokenAuth": []
+                    }
+                ],
+                "description": "creates actor instance and returns its uuid. Birth in ISO format (2009-05-27T00:00:00.000Z)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "CreateActor",
+                "parameters": [
+                    {
+                        "description": "actor info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vk_test_task_internal_api_models.CreateActorParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vk_test_task_internal_api_models.CreateActorParams"
+                        }
+                    }
+                }
+            }
+        },
+        "/actor/delete": {
+            "post": {
+                "security": [
+                    {
+                        "AccessTokenAuth": []
+                    }
+                ],
+                "description": "deletes actor by its actorId",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "DeleteActor",
+                "parameters": [
+                    {
+                        "description": "actorId",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vk_test_task_internal_api_models.DeleteActorParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/actor/get": {
+            "get": {
+                "security": [
+                    {
+                        "AccessTokenAuth": []
+                    }
+                ],
+                "description": "return all actors with their films",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "GetActors",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/actor/update": {
+            "post": {
+                "security": [
+                    {
+                        "AccessTokenAuth": []
+                    }
+                ],
+                "description": "updates actor info. Birth in ISO format (2009-05-27T00:00:00.000Z)",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "UpdateActor",
+                "parameters": [
+                    {
+                        "description": "actor info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vk_test_task_internal_api_models.UpdateActorParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/film/create": {
+            "post": {
+                "security": [
+                    {
+                        "AccessTokenAuth": []
+                    }
+                ],
+                "description": "creates film instance and returns its uuid. Release date in ISO format (2009-05-27T00:00:00.000Z)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Film"
+                ],
+                "summary": "CreateFilm",
+                "parameters": [
+                    {
+                        "description": "film info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vk_test_task_internal_api_models.CreateFilmParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vk_test_task_internal_api_models.CreateFilmParams"
+                        }
+                    }
+                }
+            }
+        },
+        "/film/delete": {
+            "post": {
+                "security": [
+                    {
+                        "AccessTokenAuth": []
+                    }
+                ],
+                "description": "deletes film by its filmId",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Film"
+                ],
+                "summary": "DeleteFilm",
+                "parameters": [
+                    {
+                        "description": "filmId",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vk_test_task_internal_api_models.DeleteFilmParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/film/get{sort_by}{asc}": {
+            "get": {
+                "security": [
+                    {
+                        "AccessTokenAuth": []
+                    }
+                ],
+                "description": "return all films with their actors",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Film"
+                ],
+                "summary": "GetFilms",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "sort column [В сваггере не настроены квери параметры, не нашел документации. Сортировка идеально работает через постман или инсомнию. Спасибо за понимание.]",
+                        "name": "sort_by",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort asc",
+                        "name": "asc",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/film/search{name}{actor_name}": {
+            "get": {
+                "security": [
+                    {
+                        "AccessTokenAuth": []
+                    }
+                ],
+                "description": "accepts path parameters, name prioritized. Defaults: rate, desc",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Film"
+                ],
+                "summary": "SearchFilm",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "film name fragment [опять же, тут не настроены квери параметры, через апишницы все работает как миленькое.]",
+                        "name": "name",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "actor name fragment",
+                        "name": "actor_name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/film/update": {
+            "post": {
+                "security": [
+                    {
+                        "AccessTokenAuth": []
+                    }
+                ],
+                "description": "updates film info. Release date in ISO format (2009-05-27T00:00:00.000Z)",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Film"
+                ],
+                "summary": "UpdateFilm",
+                "parameters": [
+                    {
+                        "description": "film info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vk_test_task_internal_api_models.UpdateFilmParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/sign_in": {
+            "post": {
+                "description": "return access jwt, refresh jwt and access expiration",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "SingIn",
+                "parameters": [
+                    {
+                        "description": "Auth claims",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vk_test_task_internal_api_models.AuthParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vk_test_task_internal_api_models.SignInUseCaseResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/sign_up": {
+            "post": {
+                "description": "Accepts login and password, returns nothing",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "SingUp",
+                "parameters": [
+                    {
+                        "description": "Auth claims",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vk_test_task_internal_api_models.AuthParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "vk_test_task_internal_api_models.AuthParams": {
+            "type": "object",
+            "properties": {
+                "login": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "vk_test_task_internal_api_models.CreateActorParams": {
+            "type": "object",
+            "properties": {
+                "actor_id": {
+                    "type": "string"
+                },
+                "birth": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "sex": {
+                    "type": "integer"
+                }
+            }
+        },
+        "vk_test_task_internal_api_models.CreateFilmParams": {
+            "type": "object",
+            "properties": {
+                "actors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "film_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "rate": {
+                    "type": "integer"
+                },
+                "release_date": {
+                    "type": "string"
+                }
+            }
+        },
+        "vk_test_task_internal_api_models.DeleteActorParams": {
+            "type": "object",
+            "properties": {
+                "actor_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "vk_test_task_internal_api_models.DeleteFilmParams": {
+            "type": "object",
+            "properties": {
+                "film_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "vk_test_task_internal_api_models.SignInUseCaseResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "expiration": {
+                    "type": "integer"
+                },
+                "refresh_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "vk_test_task_internal_api_models.UpdateActorParams": {
+            "type": "object",
+            "properties": {
+                "actor_id": {
+                    "type": "string"
+                },
+                "birth": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "sex": {
+                    "type": "integer"
+                }
+            }
+        },
+        "vk_test_task_internal_api_models.UpdateFilmParams": {
+            "type": "object",
+            "properties": {
+                "actors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "film_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "rate": {
+                    "type": "integer"
+                },
+                "release_date": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "AccessTokenAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "",
-	Host:             "",
-	BasePath:         "",
+	Host:             "localhost:9091",
+	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "",
+	Title:            "VK_TEST_TASK",
 	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

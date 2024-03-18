@@ -7,6 +7,15 @@ import (
 	"vk_test_task/internal/api/models"
 )
 
+// SignIn godoc
+// @Summary SingIn
+// @Description return access jwt, refresh jwt and access expiration
+// @Tags Authorization
+// @Param input body api_models.AuthParams true "Auth claims"
+// @Accept json
+// @Produce json
+// @Success 200 {object} api_models.SignInUseCaseResponse
+// @Router /sign_in [post]
 func (h Handler) SignIn() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var params api_models.AuthParams
@@ -43,6 +52,14 @@ func (h Handler) SignIn() http.HandlerFunc {
 	}
 }
 
+// SignUp godoc
+// @Summary SingUp
+// @Description Accepts login and password, returns nothing
+// @Tags Authorization
+// @Param input body api_models.AuthParams true "Auth claims"
+// @Accept json
+// @Success 200
+// @Router /sign_up [post]
 func (h Handler) SignUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var params api_models.AuthParams

@@ -1,4 +1,327 @@
+basePath: /
+definitions:
+  vk_test_task_internal_api_models.AuthParams:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+    type: object
+  vk_test_task_internal_api_models.CreateActorParams:
+    properties:
+      actor_id:
+        type: string
+      birth:
+        type: string
+      name:
+        type: string
+      sex:
+        type: integer
+    type: object
+  vk_test_task_internal_api_models.CreateFilmParams:
+    properties:
+      actors:
+        items:
+          type: string
+        type: array
+      description:
+        type: string
+      film_id:
+        type: string
+      name:
+        type: string
+      rate:
+        type: integer
+      release_date:
+        type: string
+    type: object
+  vk_test_task_internal_api_models.DeleteActorParams:
+    properties:
+      actor_id:
+        type: string
+    type: object
+  vk_test_task_internal_api_models.DeleteFilmParams:
+    properties:
+      film_id:
+        type: string
+    type: object
+  vk_test_task_internal_api_models.SignInUseCaseResponse:
+    properties:
+      access_token:
+        type: string
+      expiration:
+        type: integer
+      refresh_token:
+        type: string
+    type: object
+  vk_test_task_internal_api_models.UpdateActorParams:
+    properties:
+      actor_id:
+        type: string
+      birth:
+        type: string
+      name:
+        type: string
+      sex:
+        type: integer
+    type: object
+  vk_test_task_internal_api_models.UpdateFilmParams:
+    properties:
+      actors:
+        items:
+          type: string
+        type: array
+      description:
+        type: string
+      film_id:
+        type: string
+      name:
+        type: string
+      rate:
+        type: integer
+      release_date:
+        type: string
+    type: object
+host: localhost:9091
 info:
   contact: {}
-paths: {}
+  title: VK_TEST_TASK
+paths:
+  /actor/create:
+    post:
+      consumes:
+      - application/json
+      description: creates actor instance and returns its uuid. Birth in ISO format
+        (2009-05-27T00:00:00.000Z)
+      parameters:
+      - description: actor info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/vk_test_task_internal_api_models.CreateActorParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vk_test_task_internal_api_models.CreateActorParams'
+      security:
+      - AccessTokenAuth: []
+      summary: CreateActor
+      tags:
+      - Actor
+  /actor/delete:
+    post:
+      consumes:
+      - application/json
+      description: deletes actor by its actorId
+      parameters:
+      - description: actorId
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/vk_test_task_internal_api_models.DeleteActorParams'
+      responses:
+        "200":
+          description: OK
+      security:
+      - AccessTokenAuth: []
+      summary: DeleteActor
+      tags:
+      - Actor
+  /actor/get:
+    get:
+      description: return all actors with their films
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - AccessTokenAuth: []
+      summary: GetActors
+      tags:
+      - Actor
+  /actor/update:
+    post:
+      consumes:
+      - application/json
+      description: updates actor info. Birth in ISO format (2009-05-27T00:00:00.000Z)
+      parameters:
+      - description: actor info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/vk_test_task_internal_api_models.UpdateActorParams'
+      responses:
+        "200":
+          description: OK
+      security:
+      - AccessTokenAuth: []
+      summary: UpdateActor
+      tags:
+      - Actor
+  /film/create:
+    post:
+      consumes:
+      - application/json
+      description: creates film instance and returns its uuid. Release date in ISO
+        format (2009-05-27T00:00:00.000Z)
+      parameters:
+      - description: film info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/vk_test_task_internal_api_models.CreateFilmParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vk_test_task_internal_api_models.CreateFilmParams'
+      security:
+      - AccessTokenAuth: []
+      summary: CreateFilm
+      tags:
+      - Film
+  /film/delete:
+    post:
+      consumes:
+      - application/json
+      description: deletes film by its filmId
+      parameters:
+      - description: filmId
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/vk_test_task_internal_api_models.DeleteFilmParams'
+      responses:
+        "200":
+          description: OK
+      security:
+      - AccessTokenAuth: []
+      summary: DeleteFilm
+      tags:
+      - Film
+  /film/get{sort_by}{asc}:
+    get:
+      consumes:
+      - application/json
+      description: return all films with their actors
+      parameters:
+      - description: sort column [В сваггере не настроены квери параметры, не нашел
+          документации. Сортировка идеально работает через постман или инсомнию. Спасибо
+          за понимание.]
+        in: path
+        name: sort_by
+        type: string
+      - description: sort asc
+        in: path
+        name: asc
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - AccessTokenAuth: []
+      summary: GetFilms
+      tags:
+      - Film
+  /film/search{name}{actor_name}:
+    get:
+      description: 'accepts path parameters, name prioritized. Defaults: rate, desc'
+      parameters:
+      - description: film name fragment [опять же, тут не настроены квери параметры,
+          через апишницы все работает как миленькое.]
+        in: path
+        name: name
+        type: string
+      - description: actor name fragment
+        in: path
+        name: actor_name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - AccessTokenAuth: []
+      summary: SearchFilm
+      tags:
+      - Film
+  /film/update:
+    post:
+      consumes:
+      - application/json
+      description: updates film info. Release date in ISO format (2009-05-27T00:00:00.000Z)
+      parameters:
+      - description: film info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/vk_test_task_internal_api_models.UpdateFilmParams'
+      responses:
+        "200":
+          description: OK
+      security:
+      - AccessTokenAuth: []
+      summary: UpdateFilm
+      tags:
+      - Film
+  /sign_in:
+    post:
+      consumes:
+      - application/json
+      description: return access jwt, refresh jwt and access expiration
+      parameters:
+      - description: Auth claims
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/vk_test_task_internal_api_models.AuthParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vk_test_task_internal_api_models.SignInUseCaseResponse'
+      summary: SingIn
+      tags:
+      - Authorization
+  /sign_up:
+    post:
+      consumes:
+      - application/json
+      description: Accepts login and password, returns nothing
+      parameters:
+      - description: Auth claims
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/vk_test_task_internal_api_models.AuthParams'
+      responses:
+        "200":
+          description: OK
+      summary: SingUp
+      tags:
+      - Authorization
+securityDefinitions:
+  AccessTokenAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

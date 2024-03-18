@@ -8,11 +8,15 @@ import (
 )
 
 // CreateActor godoc
-// @Description creates actor instance and returns its uuid
+// @Summary CreateActor
+// @Description creates actor instance and returns its uuid. Birth in ISO format (2009-05-27T00:00:00.000Z)
+// @Tags Actor
+// @Param input body api_models.CreateActorParams true "actor info"
 // @Accept json
 // @Produce json
 // @Success 200 {object} api_models.CreateActorParams
 // @Router /actor/create [post]
+// @Security AccessTokenAuth
 func (h Handler) CreateActor() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var params api_models.CreateActorParams
@@ -39,10 +43,17 @@ func (h Handler) CreateActor() http.HandlerFunc {
 	}
 }
 
+// GetActors godoc
+// @Summary GetActors
+// @Description return all actors with their films
+// @Tags Actor
+// @Produce json
+// @Success 200
+// @Router /actor/get [get]
+// @Security AccessTokenAuth
 func (h Handler) GetActors() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		h.logger.Info(fmt.Sprintf("/actor/get request."))
-
 		response, err := h.uc.GetActors()
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -64,6 +75,15 @@ func (h Handler) GetActors() http.HandlerFunc {
 	}
 }
 
+// UpdateActor godoc
+// @Summary UpdateActor
+// @Description updates actor info. Birth in ISO format (2009-05-27T00:00:00.000Z)
+// @Tags Actor
+// @Param input body api_models.UpdateActorParams true "actor info"
+// @Accept json
+// @Success 200
+// @Router /actor/update [post]
+// @Security AccessTokenAuth
 func (h Handler) UpdateActor() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var params api_models.UpdateActorParams
@@ -90,6 +110,15 @@ func (h Handler) UpdateActor() http.HandlerFunc {
 	}
 }
 
+// DeleteActor godoc
+// @Summary DeleteActor
+// @Description deletes actor by its actorId
+// @Tags Actor
+// @Param input body api_models.DeleteActorParams true "actorId"
+// @Accept json
+// @Success 200
+// @Router /actor/delete [post]
+// @Security AccessTokenAuth
 func (h Handler) DeleteActor() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var params api_models.DeleteActorParams
