@@ -1,2 +1,6 @@
 .idea
 .env
+config/config.yaml
+logs/*
+data/postgres/
+data/redis/

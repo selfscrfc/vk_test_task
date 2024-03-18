@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  cinema:
+    container_name: app
+    build: .
+    command: ["/build/app"]
+    volumes:
+      - ./config/config.yaml:/build/config/config.yaml
+      - .env:/build/.env
+    ports:
+      - "9091:9091"
+    depends_on:
+      - cinema_db
+      - api_redis_db
+    env_file:
+      - .env
+
+
+  cinema_db:
+    image: postgres:13.14-alpine3.19
+    container_name: cinema_db
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+    env_file:
+      - .env
+    ports:
+     - "5432:5432"
+
+  api_redis_db:
+    image: redis:7.2.4-alpine3.19
+    container_name: tokens_redis
+    volumes:
+      - ./data/redis:/var/lib/redis
+      - ./data/redis/redis.conf:/usr/local/etc/redis/redis.conf
