@@ -19,5 +19,5 @@ func MapHandlers(cfg *config.Config, logger *slog.Logger) {
 
 	apiHandler := api_delivery.New(cfg, logger, apiUc)
 
-	mapRoutes.MapApiRoutes(cfg.Server.AccessSecret, logger, apiHandler)
+	mapRoutes.MapApiRoutes(cfg, logger, apiHandler)
 }

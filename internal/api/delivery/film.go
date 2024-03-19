@@ -50,12 +50,11 @@ func (h Handler) CreateFilm() http.HandlerFunc {
 // @Summary GetFilms
 // @Description return all films with their actors
 // @Tags Film
-// @Param sort_by path string false "sort column [В сваггере не настроены квери параметры, не нашел документации. Сортировка идеально работает через постман или инсомнию. Спасибо за понимание]"
-// @Param asc path string false "sort asc"
-// @Accept json
+// @Param sort_by query string false "sort column"
+// @Param asc query string false "sort asc"
 // @Produce json
 // @Success 200
-// @Router /film/get{sort_by}{asc} [get]
+// @Router /film/get [get]
 // @Security AccessTokenAuth
 func (h Handler) GetFilms() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -172,11 +171,11 @@ func (h Handler) DeleteFilm() http.HandlerFunc {
 // @Summary SearchFilm
 // @Description accepts path parameters, name prioritized. Defaults: rate, desc
 // @Tags Film
-// @Param name path string false "film name fragment [опять же, тут не настроены квери параметры, через апишницы все работает как миленькое (ну вот даже скрины могу скинуть)]"
-// @Param actor_name path string false "actor name fragment"
+// @Param name query string false "film name fragment"
+// @Param actor_name query string false "actor name fragment"
 // @Produce json
 // @Success 200
-// @Router /film/search{name}{actor_name} [get]
+// @Router /film/search [get]
 // @Security AccessTokenAuth
 func (h Handler) SearchFilm() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

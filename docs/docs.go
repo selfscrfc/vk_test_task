@@ -40,7 +40,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/vk_test_task_internal_api_models.CreateActorParams"
+                            "$ref": "#/definitions/api_models.CreateActorParams"
                         }
                     }
                 ],
@@ -48,7 +48,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/vk_test_task_internal_api_models.CreateActorParams"
+                            "$ref": "#/definitions/api_models.CreateActorParams"
                         }
                     }
                 }
@@ -76,7 +76,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/vk_test_task_internal_api_models.DeleteActorParams"
+                            "$ref": "#/definitions/api_models.DeleteActorParams"
                         }
                     }
                 ],
@@ -131,7 +131,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/vk_test_task_internal_api_models.UpdateActorParams"
+                            "$ref": "#/definitions/api_models.UpdateActorParams"
                         }
                     }
                 ],
@@ -167,7 +167,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/vk_test_task_internal_api_models.CreateFilmParams"
+                            "$ref": "#/definitions/api_models.CreateFilmParams"
                         }
                     }
                 ],
@@ -175,7 +175,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/vk_test_task_internal_api_models.CreateFilmParams"
+                            "$ref": "#/definitions/api_models.CreateFilmParams"
                         }
                     }
                 }
@@ -203,7 +203,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/vk_test_task_internal_api_models.DeleteFilmParams"
+                            "$ref": "#/definitions/api_models.DeleteFilmParams"
                         }
                     }
                 ],
@@ -214,7 +214,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/film/get{sort_by}{asc}": {
+        "/film/get": {
             "get": {
                 "security": [
                     {
@@ -222,9 +222,6 @@ const docTemplate = `{
                     }
                 ],
                 "description": "return all films with their actors",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -235,15 +232,15 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "sort column [В сваггере не настроены квери параметры, не нашел документации. Сортировка идеально работает через постман или инсомнию. Спасибо за понимание.]",
+                        "description": "sort column",
                         "name": "sort_by",
-                        "in": "path"
+                        "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "sort asc",
                         "name": "asc",
-                        "in": "path"
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -253,7 +250,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/film/search{name}{actor_name}": {
+        "/film/search": {
             "get": {
                 "security": [
                     {
@@ -271,15 +268,15 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "film name fragment [опять же, тут не настроены квери параметры, через апишницы все работает как миленькое.]",
+                        "description": "film name fragment",
                         "name": "name",
-                        "in": "path"
+                        "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "actor name fragment",
                         "name": "actor_name",
-                        "in": "path"
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -311,7 +308,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/vk_test_task_internal_api_models.UpdateFilmParams"
+                            "$ref": "#/definitions/api_models.UpdateFilmParams"
                         }
                     }
                 ],
@@ -342,7 +339,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/vk_test_task_internal_api_models.AuthParams"
+                            "$ref": "#/definitions/api_models.AuthParams"
                         }
                     }
                 ],
@@ -350,7 +347,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/vk_test_task_internal_api_models.SignInUseCaseResponse"
+                            "$ref": "#/definitions/api_models.SignInUseCaseResponse"
                         }
                     }
                 }
@@ -373,7 +370,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/vk_test_task_internal_api_models.AuthParams"
+                            "$ref": "#/definitions/api_models.AuthParams"
                         }
                     }
                 ],
@@ -386,7 +383,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "vk_test_task_internal_api_models.AuthParams": {
+        "api_models.AuthParams": {
             "type": "object",
             "properties": {
                 "login": {
@@ -397,7 +394,7 @@ const docTemplate = `{
                 }
             }
         },
-        "vk_test_task_internal_api_models.CreateActorParams": {
+        "api_models.CreateActorParams": {
             "type": "object",
             "properties": {
                 "actor_id": {
@@ -414,7 +411,7 @@ const docTemplate = `{
                 }
             }
         },
-        "vk_test_task_internal_api_models.CreateFilmParams": {
+        "api_models.CreateFilmParams": {
             "type": "object",
             "properties": {
                 "actors": {
@@ -440,7 +437,7 @@ const docTemplate = `{
                 }
             }
         },
-        "vk_test_task_internal_api_models.DeleteActorParams": {
+        "api_models.DeleteActorParams": {
             "type": "object",
             "properties": {
                 "actor_id": {
@@ -448,7 +445,7 @@ const docTemplate = `{
                 }
             }
         },
-        "vk_test_task_internal_api_models.DeleteFilmParams": {
+        "api_models.DeleteFilmParams": {
             "type": "object",
             "properties": {
                 "film_id": {
@@ -456,7 +453,7 @@ const docTemplate = `{
                 }
             }
         },
-        "vk_test_task_internal_api_models.SignInUseCaseResponse": {
+        "api_models.SignInUseCaseResponse": {
             "type": "object",
             "properties": {
                 "access_token": {
@@ -470,7 +467,7 @@ const docTemplate = `{
                 }
             }
         },
-        "vk_test_task_internal_api_models.UpdateActorParams": {
+        "api_models.UpdateActorParams": {
             "type": "object",
             "properties": {
                 "actor_id": {
@@ -487,7 +484,7 @@ const docTemplate = `{
                 }
             }
         },
-        "vk_test_task_internal_api_models.UpdateFilmParams": {
+        "api_models.UpdateFilmParams": {
             "type": "object",
             "properties": {
                 "actors": {
